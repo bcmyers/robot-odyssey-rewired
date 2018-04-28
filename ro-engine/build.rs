@@ -3,13 +3,6 @@ use std::ffi::OsStr;
 use std::fmt::Debug;
 use std::process::Command;
 
-const GAME_SCRIPTS: [&str; 5] = [
-    "bt_game.py",
-    "bt_lab.py",
-    "bt_tutorial.py",
-    "bt_menu.py",
-    "bt_renderer.py",
-];
 
 fn python<S: AsRef<OsStr> + Debug>(args: &[S]) {
     let status = Command::new("python3")
@@ -27,7 +20,15 @@ fn main() {
 
     python(&["scripts/check-originals.py", &original_dir, &out_dir]);
 
-    for script in GAME_SCRIPTS.iter() {
+    let game_scripts = &[
+        "bt_game.py",
+        "bt_lab.py",
+        "bt_tutorial.py",
+        "bt_menu.py",
+        "bt_renderer.py",
+    ];
+
+    for script in game_scripts.iter() {
         let script = format!("scripts/{}", script);
         python(&[&script, &out_dir]);
     }
